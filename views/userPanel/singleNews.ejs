@@ -1,0 +1,64 @@
+<%- include('header') %>
+
+
+    <main class="p-4">
+        <div class="d-flex align-items-center">
+            <a href="/" class="text-decoration-none text-dark d-inlne-block mx-2 activeCategory">All news</a> /
+            <a href="/?catId=<%= singleNews.categoryId.id %>" class="text-decoration-none text-dark d-inlne-block mx-2 activeCategory"><%= singleNews.categoryId.categoryName %></a>
+            / <a href="" class="text-decoration-none text-dark d-inlne-block mx-2"><%= singleNews.title %></a>
+        </div>
+        <div class="row mt-4 g-4">
+            <div class="col-md-6">
+                <img src="<%= singleNews.blog_image %>" alt="coverImage" alt="coverImage" width="100%">
+                <h2><%= singleNews.title %></h2>
+            </div>
+            <div class="col-md-6">
+                <div class="border border-2 border-secondary p-2">
+                    <h5 class="mb-3 mt-1">Recent Blogs</h5>
+                    <% recentBlog.map((item)=>{ %>  
+                        <a href="/singleNews/<%= item.id %>" class="nav-link">
+                            <div class="d-flex my-2">
+                                <img src="<%= item.blog_image %>" alt="coverImage" alt="coverImage" width="140px" />
+                                <div class="ms-2">
+                                    <h5><%= item.title %></h5>
+                                </div>
+                            </div>
+                        </a>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+        <p style="text-indent:70px;"><%- singleNews.description %></p>
+
+        <!-- commets  -->
+        <div class="border-top pt-3  border-secondary">
+            <div class="comment col-md-7">
+                <form method="post" action="/addComment" class="d-flex">
+                    <input type="hidden" name="blogId" value="<%= singleNews.id %>"  />
+                    <input type="hidden" name="userId" value="<%= locals.userData? locals.userData._doc._id:'' %>"  />
+                    <input type="text" name="comment" placeholder="comment Here" class="form-control" />
+                    <button type="submit" class="btn ms-2">Comment</button>
+                </form>
+            </div>
+            <div class="my-4">
+                <% allComments.map((item)=>{ %>
+                    <div class="d-flex">
+                        <div class="profile_image" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="<%= item.userId.profile_image %>" alt="profileImage" alt="profileImage" width="100%" class="rounded-circle img-fluid" />
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="m-0"><%= item.userId.name %> <a href="/deleteComment/<%= item.id %>"><i class="fa-solid fa-trash"></i></a></h6>
+                            <p class="mb-2"><%= item.comment %></p>
+                            <span><a href="/likesBlogComment/<%= item.id %>">Likes</a> (<%=item.likes.length %>)</span>  <span>
+                                <a href="/dislikesBlogComment/<%= item.id %>">Disikes</a> (<%=item.dislikes.length %>)</span>
+                            <p style="font-size: 12px;" class="text-secondary"><%= item.time %></p>
+                        </div>
+                    </div>
+                <% })%>  
+            </div>
+        </div>
+        <!-- end commets  -->
+    </main>
+    
+
+<%- include('footer') %>

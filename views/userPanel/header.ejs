@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- fontAwwsome icon  -->
+     <link rel="stylesheet" href="/user/css/all.min.css" type="text/css" />
+    <!-- boostrap  css  -->
+     <link rel="stylesheet" href="/user/css/bootstrap.min.css" type="text/css" />
+    <!-- main css  -->
+     <link rel="stylesheet" href="/user/css/user.css" type="text/css" />
+</head>
+<body>
+    <header class="bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg py-2 pe-4">
+            <div class="d-flex justify-content-between w-100">
+                <a class="navbar-brand text-center" href="#" >
+                    <img src="/user/images/logo.png" alt="Logo" title="Logo" width="140px" class="img-fluid">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-2 me-2 mb-lg-0">
+                        <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                    <% if(reqPath != '/singleNews' )  {%>
+                        <form class="d-flex align-items-center shadow-none p-0" role="search">
+                            <input class="form-control me-2" name="search" type="search" value="<%= searchValue %>" placeholder="Search" aria-label="Search">
+                            <button class="btn" type="submit">Search</button>
+                            <a href="/" class="btn ms-2"><i class="fa-solid fa-rotate-right"></i></a>
+                        </form>
+                        <div class="dropdown mx-2">
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Sort 
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="/?sort=<%= sort==1?-1:1 %>&sortType=createdAt">DateModify ↑↓</a></li>
+                              <li><a class="dropdown-item" href="/?sort=<%= sort==1?-1:1 %>&sortType=title">Name ↑↓</a></li>
+                            </ul>
+                        </div>
+                    <% } %>
+                    <% if(!locals.userData){ %>
+                        <div class="d-flex mx-2 userBtn">
+                            <a href="/userLogin" class="btn me-2">Login</a>
+                            <a href="/userSignUp" class="btn">signUp</a>
+                        </div>
+                    <% } else { %>
+                        <div class="dropdown">
+                            <div class="profile_image" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="<%= locals.userData._doc.profile_image %>" alt="profileImage" alt="profileImage" width="100%" class="rounded-circle img-fluid" />
+                            </div>
+
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i><%= locals.userData._doc.name %></a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-lock me-2"></i>Change Password</a></li>
+                                <li><a class="dropdown-item" href="/logOutUser"><i class="fa-solid fa-right-from-bracket me-2"></i>Log Out</a></li>
+                            </ul>
+                        </div>
+                    <% } %>    
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <aside class="position-absolute left-0 bottom-0">
+        <div>
+            <ul class="list-unstyled px-4 ">
+                <li class=" mt-4"><a href="/" class="nav-link py-2 activeCategory">All News <%= totalBlog %></a></li>
+                <% allCategory.map((item)=>{ %>
+                    <li><a href="/?catId=<%= item.id %>" class="nav-link py-2"><%= item.categoryName %> <span><%= item.blogIds.length %></span></a></li>
+                <% }) %>
+            </ul>
+        </div>
+    </aside>

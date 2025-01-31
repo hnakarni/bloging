@@ -1,0 +1,266 @@
+<%- include('../Layouts/header') %>
+
+<!--end::Sidebar-->
+<!--begin::App Main-->
+<main class="app-main">
+  <!--begin::App Content Header-->
+  <div class="app-content-header">
+    <!--begin::Container-->
+    <div class="container-fluid">
+      <!--begin::Row-->
+      <div class="d-flex justify-content-between align-items-center">
+        <div><h3 class="mb-0">Blogs</h3></div>
+        <div>
+          <form>
+            <input
+              type="text"
+              name="searchValue"
+              value="<%= searchValue %>"
+              placeholder="Search here"
+            />
+            <input type="date" name="date" value="<%= date ? date.toISOString().split('T')[0] : '' %>" class="mx-2"/>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="font-size: 12px"
+            >
+              <i class="bi bi-search"></i>
+            </button>
+            <a
+              href="/blog/viewBlog"
+              class="btn btn-primary"
+              style="font-size: 12px"
+              ><i class="bi bi-arrow-clockwise"></i
+            ></a>
+            <a href="/blog/viewBlog/?sort=1" class="btn btn-primary" style="font-size: 12px"><i class="bi bi-arrow-up"></i></a>
+            <a href="/blog/viewBlog/?sort=-1" class="btn btn-primary" style="font-size: 12px"><i class="bi bi-arrow-down"></i></a>
+          </form>
+        </div>
+        <div>
+          <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/dashBoard">dashBoard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">viewBlog</li>
+          </ol>
+        </div>
+      </div>
+      <!--end::Row-->
+    </div>
+    <!--end::Container-->
+  </div>
+  <!--end::App Content Header-->
+  <!--begin::App Content-->
+  <div class="app-content">
+    <!--begin::Container-->
+    <div class="container-fluid">
+      <!--begin::Row-->
+      <div class="row">
+        <!-- /.col -->
+        <div>
+          <!-- /.card -->
+          <form method="post" action="/blog/deactiveAllBlog">
+            <div class="card mb-4 overflow-scroll">
+              <div class="card-header border-0">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h3 class="card-title">Active Blogs</h3>
+                  <div>
+                    <label for="checkAllActiveBlog">Select All </label>
+                    <input type="checkbox" id="checkAllActiveBlog" class="mx-2">
+                    <button type="submit" class="hideBtn" id="deactiveallBtn"><i class="bi bi-ban"></i></button>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table table-striped border-top border-2">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th style="width: 10px">#</th>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th>CreatedDate</th>
+                      <th>UpdatedDate</th>
+                      <th>Image</th>
+                      <th>Description</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% activeBlog.map((item,i)=>{ %>
+                    <tr>
+                      <td><input type="checkbox" name="ids" value="<%= item.id %>" class="activeBlog" /></td>
+                      <td><%= i+1 %></td>
+                      <td><%= item.title %></td>
+                      <td><%= item.categoryId.categoryName %></td>
+                      <td>
+                        <%= new Date(item.createdAt).toLocaleDateString() %>
+                      </td>
+                      <td>
+                        <%= new Date(item.updatedAt).toLocaleDateString() %>
+                      </td>
+                      <td><img src="<%= item.blog_image %>" title="coverIamage" width="100px" alt="coverIamage"/></td>
+                      <td><%- item.description %></td>
+                      <td>
+                        <div
+                          class="d-flex align-items-center"
+                        >
+                          <a
+                            href="/blog/changeBlogStatus/<%= item.id %>/false"
+                            class="nav-link mx-2"
+                            ><i class="bi bi-ban"></i></a>
+                          <a
+                            href="/blog/updateBlog/<%= item.id %>"
+                            class="nav-link mx-2"
+                            ><i class="bi bi-pencil-square"></i
+                          ></a>
+                        </div>
+                      </td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+          </form>
+          <div class="text-center">
+            <a href="/blog/viewBlog?activeBlogpage=<%= activeBlogpage-1 %><%= searchValue != ''? '&searchValue='+searchValue:'' %><%= date? '&date='+date:'' %>" class="btn btn-primary <%= activeBlogpage <= 0 ?'disabled':'' %>">Prev</a>
+            <span><%= activeBlogpage + 1 %></span>
+            <a href="/blog/viewBlog?activeBlogpage=<%= activeBlogpage+1 %><%= searchValue != ''? '&searchValue='+searchValue:'' %><%= date? '&date='+date:'' %>" class="btn btn-primary <%= activeBlogpage >= totalActivePage-1 ?'disabled':'' %>">Next</a>
+          </div>
+          <!-- /.card -->
+        </div>
+
+        <!-- deactive blog  -->
+
+        <div class="mt-4">
+          <!-- /.card -->
+          <form method="post" action="/blog/oprateAllDeactiveBlog">
+            <div class="card mb-4 overflow-scroll">
+              <div class="card-header border-0">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h3 class="card-title">Deactive Blogs</h3>
+                  <div>
+                    <label for="checkAllActiveBlog">Select All </label>
+                    <input type="checkbox" id="checkAllDeactiveBlog" class="mx-2">
+                    <button type="submit" class="hideBtn" value="activeAll" name="activeAll" id="activeAllBtn"><i class="bi bi-arrow-90deg-left"></i></button>
+                    <button type="submit" class="hideBtn" name="deleteAll" value="deleteall" id="deleteAllBtn"><i class="bi bi-trash-fill"></i></button>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table table-striped border-2 border-top">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th style="width: 10px">#</th>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th>CreatedDate</th>
+                      <th>UpdatedDate</th>
+                      <th>Description</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% deactiveBlog.map((item,i)=>{ %>
+                    <tr>
+                      <td><input type="checkbox" name="ids" value="<%= item.id %>" class="deactiveBlog" /></td>
+                      <td><%= i+1 %></td>
+                      <td><%= item.title %></td>
+                      <td><%= item.categoryId.categoryName %></td>
+                      <td>
+                        <%= new Date(item.createdAt).toLocaleDateString() %>
+                      </td>
+                      <td>
+                        <%= new Date(item.updatedAt).toLocaleDateString() %>
+                      </td>
+                      <td><img src="<%= item.blog_image %>" alt="coverIamage" title="coverIamage" width="100px" /></td>
+                      <td><%- item.description %></td>
+                      <td>
+                        <div
+                          class="d-flex align-items-center justify-content-center"
+                        >
+                          <a href="/blog/changeBlogStatus/<%= item.id %>/true" class="nav-link mx-2"><i class="bi bi-arrow-90deg-left"></i></a>
+                          <a
+                            href="/blog/deleteBlog/<%= item.id %>"
+                            class="nav-link mx-2"
+                            ><i class="bi bi-trash-fill"></i></a>
+                          <a
+                            href="/blog/updateBlog/<%= item.id %>"
+                            class="nav-link mx-2"
+                            ><i class="bi bi-pencil-square"></i
+                          ></a>
+                        </div>
+                      </td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+          </form>
+          <div class="text-center">
+            <a href="/blog/viewBlog?deactiveBlogPage=<%= deactiveBlogPage-1 %><%= searchValue != ''? '&searchValue='+searchValue:'' %><%= date? '&date='+date:'' %>" class="btn btn-primary <%= deactiveBlogPage <= 0 ?'disabled':'' %>">Prev</a>
+            <span><%= deactiveBlogPage + 1 %></span>
+            <a href="/blog/viewBlog?deactiveBlogPage=<%= deactiveBlogPage+1 %><%= searchValue != ''? '&searchValue='+searchValue:'' %><%= date? '&date='+date:'' %>" class="btn btn-primary <%= deactiveBlogPage >= totalDeactivePage-1 ?'disabled':'' %>">Next</a>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!--end::Row-->
+    </div>
+    <!--end::Container-->
+  </div>
+  <!--end::App Content-->
+
+</main>
+<!--end::App Main-->
+
+
+<%- include('../Layouts/footer') %>
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script>
+  $("#checkAllActiveBlog").click(function(){
+      $('#deactiveallBtn').toggleClass('hideBtn')
+      $('.activeBlog').not(this).prop('checked', this.checked);
+  });
+
+  $("#checkAllDeactiveBlog").click(function(){
+      $('#activeAllBtn').toggleClass('hideBtn')
+      $('#deleteAllBtn').toggleClass('hideBtn')
+      $('.deactiveBlog').not(this).prop('checked', this.checked);
+  });
+</script>
+
+<script>
+  $('#updateBlog').on('shown.bs.modal', function () {
+    tinymce.execCommand('mceFocus', false, 'description'); // Focus on the editor
+  });
+
+  function updateBlog(id) {
+    $.ajax({
+        type:'Get',
+        url:`/blog/updateBlog/${id}`,
+        success:function(blog){
+          document.querySelector("#id").value = blog._id;
+          document.querySelector("#title").value = blog.title;
+          tinymce.get("description").getBody().innerHTML = blog.description;
+          document.querySelector('#blog_image').src = blog.blog_image;
+          document.querySelector("#categoryId").innerHTML = `
+                      <% allCategory.map((item)=>{ %>
+                          <option value="<%= item.id %>" <%= item.categoryId == item.id?selected:'' %>><%= item.categoryName %></option>
+                      <% }) %>
+                  `;
+        },
+        errors : function(err){
+          console.log("Something wrong",err);
+        } 
+    })
+  }
+</script>
+
+

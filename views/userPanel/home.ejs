@@ -1,0 +1,49 @@
+
+<%- include('header') %>
+
+
+    <main class="p-4">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <a href="" class="text-decoration-none text-dark d-inlne-block mx-2 activeCategory">All news</a>
+                / 
+            </div>
+        </div>
+        <div class="allBlog">
+            <% allBlog.map((item)=>{ %>
+                <a href="/singleNews/<%= item.id %>" class="nav-link">
+                    <div class="card my-3 shadow-sm newsItem">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <img src="<%= item.blog_image %>" alt="coverImage" alt="coverImage" width="100%" class="img-fluid"/>
+                                </div>
+                                <div class="col-md-8">
+                                <div class="card-body position-relative">
+                                    <h4><%= item.title %></h4>
+                                    <p><%- item.description.substr(0,200) %> .....</p>
+                                    <p class="text-secondary z-1 position-relative" style="font-size: 14px;"><%= item.time %> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            <% }) %>
+        </div>
+        <div aria-label="Page navigation example" class="d-flex justify-content-center mt-5">
+            <ul class="pagination ">
+                <li class="page-item">
+                    <a class="page-link <%= page<=0?'disabled':'' %>"  href="/?page=<%= page - 1 %><%= searchValue? '&search='+searchValue:'' %><%= sort? '&sort='+sort:'' %><%= sortType? '&sortType='+sortType:'' %>">Previous</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link bg-transparent text-dark" href="/?page=<%= page %>"><%= page+1 %></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link <%= page >= totalPage -1?'disabled':'' %>" href="/?page=<%= page + 1 %><%= searchValue? '&search='+searchValue:'' %><%= sort? '&sort='+sort:'' %><%= sortType? '&sortType='+sortType:'' %>">Next</a>
+                </li>
+            </ul>
+        </div>
+        
+    </main>
+    
+
+<%- include('footer') %>

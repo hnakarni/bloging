@@ -1,0 +1,127 @@
+
+<%- include('../Layouts/header') %>
+
+
+    
+      <!--end::Sidebar-->
+      <!--begin::App Main-->
+      <main class="app-main">
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="d-flex justify-content-between align-items-center">
+              <div><h3 class="mb-0">Admin Records</h3></div>
+              <div>
+                <form>
+                  <input type="text" placeholder="search here" name="search" value="<%= searchValue %>"/>
+                  <input type="date" name="date" value="<%= date %>" />
+                  <button type="submit" class="btn btn-primary" style="font-size: 14px;"><i class="bi bi-search"></i></button>
+                  <a href="/viewAdmin" class="btn btn-primary" style="font-size: 14px;"><i class="bi bi-arrow-clockwise"></i></a>
+                  <a href="/viewAdmin/?sort=1" class="btn btn-primary" style="font-size: 14px;"><i class="bi bi-arrow-up"></i></a>
+                  <a href="/viewAdmin/?sort=-1" class="btn btn-primary" style="font-size: 14px;"><i class="bi bi-arrow-down"></i></a>
+                </form>
+              </div>
+              <div>
+                <ol class="breadcrumb float-sm-end">
+                  <li class="breadcrumb-item"><a href="/dashBoard">dashBoard</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">viewAdmin</li>
+                </ol>
+              </div>
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Container-->
+        </div>
+        <!--end::App Content Header-->
+        <!--begin::App Content-->
+        <div class="app-content">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+              <!-- /.col -->
+              <div>
+                <!-- /.card -->
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <h3 class="card-title">Admin Record</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body p-0 overflow-scroll">
+                    <form method="post" action="/deleteAllAdmin">
+                      <table class="table table-striped ">
+                        <thead>
+                          <tr>
+                            <th class="d-flex">
+                              <input type="checkbox" id="checkAll" />
+                              <button type="submit" id="deleteAll"  class="btn btn-danger hideBtn ms-2" style="font-size: 12px;"><i class="bi bi-trash-fill"></i></button>
+                            </th>
+                            <th style="width: 10px">#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                            <th>Hobby</th>
+                            <th>City</th>
+                            <th>About</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% allAdminRecord.map((item,i)=>{ %>
+                            <tr>
+                              <td  valign="middle"><input type="checkbox" name="ids" value="<%= item.id %>" class="adminCheck" /></td>
+                              <td valign="middle"><%= i+1 %></td>
+                              <td valign="middle"><%= item.name %></td>
+                              <td valign="middle"><%= item.email %></td>
+                              <td valign="middle"><%= item.gender %></td>
+                              <td valign="middle"><%= item.hobby %></td>
+                              <td valign="middle"><%= item.city %></td>
+                              <td valign="middle"><%= item.about %></td>
+                              <td valign="middle"><img src="<%= item.admin_image %>" height="100px" /></td>
+                              <td valign="middle">
+                                <div class="d-flex align-items-center justify-content-center">
+                                  <a href="/deleteAdmin/<%= item.id %>" class="nav-link mx-2"><i class="bi bi-trash-fill"></i></a>
+                                  <a href="/updateAdmin/<%= item.id %>" class="nav-link mx-2"><i class="bi bi-pencil-square"></i></a>
+                                </div>
+                              </td>
+                            </tr>
+                          <% }) %>
+                          
+                        </tbody>
+                      </table>
+                    </form>
+                  </div>
+                  
+                  <!-- /.card-body -->
+                </div>
+                <div class="text-center">
+                  <a href="/viewAdmin/?page=<%= page - 1 %><%= searchValue ? '&search='+searchValue:'' %><%= date ? '&date='+date:'' %><%= sort ? '&sort='+sort:'' %>" class="btn btn-primary <%= page <= 0?'disabled':'' %>">Pre</a>
+                  <span class="mx-2"><%= page + 1 %></span>
+                  <a href="/viewAdmin/?page=<%= page + 1 %><%= searchValue ? '&search='+searchValue:'' %><%= date ? '&date='+date:'' %><%= sort ? '&sort='+sort:'' %>" class="btn btn-primary <%= page >= totalAdminPage - 1?'disabled':'' %>">Next</a>
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Container-->
+        </div>
+        <!--end::App Content-->
+      </main>
+      <!--end::App Main-->
+     
+
+
+
+<%- include('../Layouts/footer') %>
+
+<script>
+  $("#checkAll").click(function(){
+      $('#deleteAll').toggleClass('hideBtn');
+      $('.adminCheck').not(this).prop('checked', this.checked);
+  });
+</script>

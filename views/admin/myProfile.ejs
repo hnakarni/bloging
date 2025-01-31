@@ -1,0 +1,97 @@
+
+<%- include('../Layouts/header') %>
+
+
+    
+      <!--end::Sidebar-->
+      <!--begin::App Main-->
+      <main class="app-main">
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+              <div class="col-sm-6"><h3 class="mb-0">My Profile</h3></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                  <li class="breadcrumb-item"><a href="/dashBoard">dashBoard</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">myProfile</li>
+                </ol>
+              </div>
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Container-->
+        </div>
+        <!--end::App Content Header-->
+        <!--begin::App Content-->
+        <div class="app-content">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+              <!-- /.col -->
+              <div>
+                <!-- /.card -->
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <h3 class="card-title">My Profile</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body row p-3">
+                      <div class="col-sm-5">
+                          <div class="p-4">
+                            <img src="<%= locals.adminData.admin_image %>" class="img-fluid rounded-3" alt="Profile" title="Profile" width="100%">
+                            <h3 class="mt-4"><%= locals.adminData.name %></h3>
+                            <p>Super Admin</p>
+                          </div>
+                      </div>
+                      <div class="col-md-7">
+                          <div class="pt-4">
+                            <div class="border-bottom border-2 mb-2">
+                              <h5>Full Name</h5>
+                              <p class="mb-2"><%= locals.adminData.name %></p>
+                            </div>
+                            <div  class="border-bottom border-2 mb-2 mt-4">
+                              <h5>Email</h5>
+                              <p class="mb-2"><%= locals.adminData.email %></p>
+                            </div>
+                            <div  class="border-bottom border-2 mb-2 mt-4">
+                              <h5>Gender</h5>
+                              <p class="mb-2"><%= locals.adminData.gender %></p>
+                            </div>
+                            <div  class="border-bottom border-2 mb-2 mt-4">
+                              <h5>Hobbies</h5>
+                              <p class="mb-2"><%= locals.adminData.hobby.join(', ') %></p>
+                            </div>
+                            <div  class="border-bottom border-2 mb-2 mt-4">
+                              <h5>City</h5>
+                              <p class="mb-2"><%= locals.adminData.city %></p>
+                            </div>
+                            <div  class="border-bottom border-2 mb-2 mt-4">
+                              <h5>About</h5>
+                              <p class="mb-2"><%= locals.adminData.about %></p>
+                            </div>
+                            <a href="/updateAdmin/<%= locals.adminData._id %>" class="btn btn-secondary my-4"><i class="bi bi-pencil-square me-2"></i>Edit Profile</a>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Container-->
+        </div>
+        <!--end::App Content-->
+      </main>
+      <!--end::App Main-->
+     
+
+
+
+<%- include('../Layouts/footer') %>

@@ -1,0 +1,199 @@
+
+<%- include('../Layouts/header') %>
+
+      <!--end::Sidebar-->
+      <!--begin::App Main-->
+      <main class="app-main">
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+              <div class="col-sm-6"><h3 class="mb-0">Dashboard</h3></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                  <li class="breadcrumb-item"><a href="/dashBoard">Dashboard</a></li>
+                  <li class="breadcrumb-item active" aria-current="page"></li>
+                </ol>
+              </div>
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Container-->
+        </div>
+        <!--end::App Content Header-->
+        <!--begin::App Content-->
+        <div class="app-content">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+              <!--begin::Col-->
+              <div class="col-lg-3 col-6">
+                <!--begin::Small Box Widget 1-->
+                <div class="small-box text-bg-primary">
+                  <div class="inner">
+                    <h3><%= totalCategory %></h3>
+                    <p>Total Category</p>
+                  </div>
+                  <svg
+                    class="small-box-icon"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
+                    ></path>
+                  </svg>
+                  <a
+                    href="/category/viewCategory"
+                    class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
+                  >
+                    More info <i class="bi bi-link-45deg"></i>
+                  </a>
+                </div>
+                <!--end::Small Box Widget 1-->
+              </div>
+              <!--end::Col-->
+              <div class="col-lg-3 col-6">
+                <!--begin::Small Box Widget 2-->
+                <div class="small-box text-bg-success">
+                  <div class="inner">
+                    <h3><%= totalBlog %></h3>
+                    <p>Total Blogs</p>
+                  </div>
+                  <svg
+                    class="small-box-icon"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z"
+                    ></path>
+                  </svg>
+                  <a
+                    href="/blog/viewBlog"
+                    class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
+                  >
+                    More info <i class="bi bi-link-45deg"></i>
+                  </a>
+                </div>
+                <!--end::Small Box Widget 2-->
+              </div>
+            </div>
+            <!--end::Row-->
+            <!--begin::Row-->
+            <div class="row">
+              <!-- Start col -->
+              <div class="col-lg-6 connectedSortable">
+                <div class="card mb-4">
+                  <div class="card-header"><h3 class="card-title">Blog in Category</h3></div>
+                  <div class="card-body">
+                    <div class="text-center mb-4">
+                      <div onclick="changeChartType('pie')" style="font-size: 12px;" class="btn btn-primary">Pie</div>
+                      <div onclick="changeChartType('bar')" style="font-size: 12px;" class="btn btn-primary">Bar</div>
+                      <div onclick="changeChartType('doughnut')" style="font-size: 12px;" class="btn btn-primary">Doughnut</div>
+                    </div>
+                    <div>
+                      <canvas id="category-chart" style="height: 200px !important;width: 100%;"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.Start col -->
+              <!-- <div class="col-lg-6">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <div class="card-body"><div id="sales-chart"></div></div>
+                  </div>
+                </div>
+              </div> -->
+              <!-- /.Start col -->
+            </div>
+            <!-- /.row (main row) -->
+          </div>
+          <!--end::Container-->
+        </div>
+          
+        <!--end::App Content-->
+      </main>
+      <!--end::App Main-->
+      <!--begin::Footer-->
+      
+
+      <%- include('../Layouts/footer') %>
+      <script>
+
+      let chart;
+
+      changeChartType('bar');
+      function changeChartType(chartType){
+        if(chart){
+          chart.destroy();
+        }
+        const ctx = document.getElementById('category-chart');
+        chart = new Chart(ctx, {
+          type: chartType,
+          data: {
+            labels: JSON.parse('<%- JSON.stringify(lables) %>'),
+            datasets: [{
+              label: 'Blogs',
+              data: JSON.parse('<%- JSON.stringify(values) %>'),
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
+
+      </script>
+  
+      <!-- <script>
+       
+         const sales_chart_options = {
+          series: [
+            {
+              name: 'blogs',
+              data: JSON.parse('<%- JSON.stringify(values) %>'),
+            },
+          ],
+          chart: {
+            type: 'bar',
+            height: 200,
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          xaxis: {
+            categories: JSON.parse('<%- JSON.stringify(lables) %>'),
+          },
+          fill: {
+            opacity: 1,
+          },
+          tooltip: {
+            y: {
+              formatter: function (val) {
+                return  val;
+              },
+            },
+          },
+        };
+
+        const sales_chart = new ApexCharts(
+          document.querySelector('#sales-chart'),
+          sales_chart_options,
+        );
+       sales_chart.render();
+    </script> -->
