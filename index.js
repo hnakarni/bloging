@@ -1,7 +1,18 @@
 const express = require('express');
 const path = require('path');
 const port =  8002;
-const db = require('./config/db');
+// const db = require('./config/db');
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://piyushNakarani:Rwn2faculty@cluster0.lefjm.mongodb.net/blogingData', 
+     { useNewUrlParser: true, useUnifiedTopology:true}).then((res)=>{
+      console.log("connected to database");
+     })
+     .catch((err)=>{
+      console.log("something wrong");
+     })
+
+
 const cookieParser = require('cookie-parser');
 
 const passport = require('passport');
